@@ -11,6 +11,7 @@ require (
 
 require (
 	github.com/jinzhu/gorm v1.9.16
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
