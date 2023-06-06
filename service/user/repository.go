@@ -2,6 +2,6 @@ package user
 
 import "context"
 
-type userRepository interface{
+type UserRepository interface{
 	GetAllUserRepo(ctx context.Context) ([]User, error)
 }
