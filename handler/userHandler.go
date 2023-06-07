@@ -23,10 +23,7 @@ func NewUserHandler (version *echo.Group,userService user.UserServiceInt){
 	userRoutes.POST("/", handler.CreateUserHdl)
 	userRoutes.POST("/:name", handler.UpdateUserHdl)
 	userRoutes.POST("/delete", handler.DeleteUserHdl)
-	// userRoutes.POST("/path/:name", handler.GetUserByPathHdl)
-	// userRoutes.POST("/query", handler.GetUserByQueryHdl)
-	// userRoutes.POST("/raw", handler.GetUserByRawHdl)
-	// userRoutes.POST("/form", handler.GetUserByFormHdl)
+	userRoutes.POST("/form", handler.GetUserByFormHdl)
 
 }
 
@@ -93,18 +90,14 @@ func (uh *userHandler) DeleteUserHdl(c echo.Context) error {
 	return c.JSON(http.StatusOK, echo.Map{"Delete": "success"})
 }
 
-// func (uh *userHandler) GetUserByPathHdl(c echo.Context) error {
+func (uh *userHandler) GetUserByFormHdl(c echo.Context) error {
+	log.Printf(c.FormValue("name"))
 
-// }
+	user,err := uh.userService.GetUserByFormServ(c.Request().Context(),c.FormValue("name"))
+	if err != nil{
+		log.Error(err)
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": err.Error()})
+	}
 
-// func (uh *userHandler) GetUserByQueryHdl(c echo.Context) error {
-
-// }
-
-// func (uh *userHandler) GetUserByRawHdl(c echo.Context) error {
-
-// }
-
-// func (uh *userHandler) GetUserByFormHdl(c echo.Context) error {
-
-// }
+	return c.JSON(http.StatusOK,user)
+}

@@ -10,10 +10,7 @@ type UserServiceInt interface {
 	CreateUserServ(ctx context.Context, user UserModel) error
 	UpdateUserServ(ctx context.Context, user UserModel,name string) error
 	DeleteUserServ(ctx context.Context, name string) error
-	// GetUserByPathServ(ctx context.Context,name string)([]UserModel, error)
-	// GetUserByQueryServ(ctx context.Context,name string)([]UserModel, error)
-	// GetUserByRawServ(ctx context.Context,name string)([]UserModel, error)
-	// GetUserByFormServ(ctx context.Context,name string)([]UserModel, error)
+	GetUserByFormServ(ctx context.Context,name string)([]UserModel, error)
 }
 
 type UserService struct{
@@ -66,18 +63,12 @@ func (usr *UserService) DeleteUserServ(ctx context.Context, name string) error{
 	return nil
 }
 
-// func (usr *UserService) GetUserByPathServ(ctx context.Context,name string)([]UserModel, error){
+func (usr *UserService) GetUserByFormServ(ctx context.Context,name string)([]UserModel, error){
+	user,err := usr.userRepository.GetUserByFormRepo(ctx,name)
 
-// }
-
-// func (usr *UserService) GetUserByQueryServ(ctx context.Context,name string)([]UserModel, error){
-
-// }
-
-// func (usr *UserService) GetUserByRawServ(ctx context.Context,name string)([]UserModel, error){
-
-// }
-
-// func (usr *UserService) GetUserByFormServ(ctx context.Context,name string)([]UserModel, error){
-
-// }
+	if err!= nil{
+		log.Fatalln(err)
+		return nil,err
+	}
+	return user,nil
+}
