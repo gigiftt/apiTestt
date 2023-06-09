@@ -11,6 +11,7 @@ type UserServiceInt interface {
 	UpdateUserServ(ctx context.Context, user UserModel,name string) error
 	DeleteUserServ(ctx context.Context, name string) error
 	GetUserByFormServ(ctx context.Context,name string)([]UserModel, error)
+	GetFile(ctx context.Context) error
 }
 
 type UserService struct{
@@ -71,4 +72,10 @@ func (usr *UserService) GetUserByFormServ(ctx context.Context,name string)([]Use
 		return nil,err
 	}
 	return user,nil
+}
+
+
+func (usr *UserService) GetFile(ctx context.Context) error {
+	
+	return nil
 }

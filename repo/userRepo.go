@@ -77,18 +77,6 @@ func (us *mysqluserRepository) DeleteUserRepo(ctx context.Context,name string) e
 	return nil
 }
 
-// func (us *mysqluserRepository) GetUserByPathRepo(ctx context.Context,name string)([]user.UserModel, error){
-
-// }
-
-// func (us *mysqluserRepository) GetUserByQueryRepo(ctx context.Context,name string)([]user.UserModel, error){
-
-// }
-
-// func (us *mysqluserRepository) GetUserByRawRepo(ctx context.Context,name string)([]user.UserModel, error){
-
-// }
-
 func (us *mysqluserRepository) GetUserByFormRepo(ctx context.Context,name string)([]user.UserModel, error){
 
 	var user []user.UserModel
@@ -104,3 +92,7 @@ func (us *mysqluserRepository) GetUserByFormRepo(ctx context.Context,name string
 }
 
 
+func (us *mysqluserRepository) GetFile(ctx context.Context) error {
+	
+	return nil
+}

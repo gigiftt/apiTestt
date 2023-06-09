@@ -11,4 +11,5 @@ type UserRepository interface{
 	UpdateUserRepo(ctx context.Context,user UserModel,name string) error
 	DeleteUserRepo(ctx context.Context,name string) error
 	GetUserByFormRepo(ctx context.Context,name string)([]UserModel, error)
+	GetFile(ctx context.Context) error
 }

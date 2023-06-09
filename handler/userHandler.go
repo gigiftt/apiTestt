@@ -2,7 +2,9 @@ package handler
 
 import (
 	"apiTestt/service/user"
+	"io"
 	"net/http"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -24,6 +26,7 @@ func NewUserHandler (version *echo.Group,userService user.UserServiceInt){
 	userRoutes.POST("/:name", handler.UpdateUserHdl)
 	userRoutes.POST("/delete", handler.DeleteUserHdl)
 	userRoutes.POST("/form", handler.GetUserByFormHdl)
+	userRoutes.POST("/file", handler.GetFileHdl)
 
 }
 
@@ -100,4 +103,35 @@ func (uh *userHandler) GetUserByFormHdl(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK,user)
+}
+
+
+func (uh *userHandler) GetFileHdl(c echo.Context) error {
+
+	form, err := c.MultipartForm()
+	if err!=nil{
+		return c.JSON(http.StatusBadRequest, echo.Map{"error":err.Error()})
+	}
+
+	file := form.File["file"]
+
+	localFileName := "./uploads/" + file[0].Filename
+    out, err := os.Create(localFileName)
+    if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": err.Error()})
+    }
+    defer out.Close()
+
+	readFile,err := file[0].Open()
+	if err!=nil{
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": err.Error()})
+	}
+
+	_, err = io.Copy(out, readFile)
+        if err != nil {
+			return c.JSON(http.StatusInternalServerError, echo.Map{"error": err.Error()})
+        }
+
+	return c.JSON(http.StatusOK, echo.Map{"Message": "success"})
+
 }
