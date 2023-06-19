@@ -40,7 +40,6 @@ func (usr *UserService) CreateUserServ(ctx context.Context, user UserModel) erro
 		log.Fatalln(err)
 		return err
 	}
-
 	return nil
 }
 
