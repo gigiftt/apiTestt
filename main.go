@@ -1,12 +1,11 @@
 package main
 
 import (
+	// "apiTestt/handler/userHandler"
 	"apiTestt/handler"
 	"apiTestt/repo"
 	"apiTestt/service/user"
 	"log"
-
-	// "net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
@@ -15,23 +14,21 @@ import (
 	// "google.golang.org/grpc/profiling/service"
 )
 
-
 func main() {
-    e := echo.New()
+	e := echo.New()
 
-    db, err := sqlx.Connect("mysql", "root:@(127.0.0.1:3306)/godb")
+	db, err := sqlx.Connect("mysql", "root:@(127.0.0.1:3306)/godb")
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-    apiWithoutJWT := e.Group("")
+	apiWithoutJWT := e.Group("")
 
-    userRepo := repo.NewuserRepository(db)
+	userRepo := repo.NewuserRepository(db)
 
-    userService := user.NewUserService(userRepo)
+	userService := user.NewUserService(userRepo)
 
-    handler.NewUserHandler(apiWithoutJWT,userService)
+	handler.NewUserHandler(apiWithoutJWT, userService)
 
-    e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8080"))
 }
-
